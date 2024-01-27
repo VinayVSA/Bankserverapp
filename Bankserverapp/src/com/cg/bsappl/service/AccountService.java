@@ -16,7 +16,7 @@ public interface AccountService {
 	
 	public void createAccount(Account account);
 	
-	public void deleteAccount(int id);
+	public void deleteAccount(int id)throws AccountException;
 	
 	public  void updateAccount(Account updateAccount);
 	

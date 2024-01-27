@@ -20,7 +20,7 @@ import java.util.*;
 public class BankappUi {
 	private static AccountService accountService=new AccountServiceImpl(new AccountDAOImpl(),new TransactionServiceImpl(new TransactionDAOImpl()));
 	private static CustomerService customerService=new CustomerServiceImpl(new CustomerDAOImpl());
-public static void main(String args[])throws AccountException,CustomerException,TransactionException
+public static void main(String args[])
 {
 	
 	Scanner s=new Scanner(System.in);
@@ -35,10 +35,22 @@ public static void main(String args[])throws AccountException,CustomerException,
 		switch(log)
 		{
 			case 1:
+				try {
 				adminPage();
+				}
+				catch(AccountException e)
+				{
+					//System.out.println(e.getMessage());
+				}
 				break;
 			case 2:
+				try {
 				customerPage();
+				}
+				catch(AccountException e)
+				{
+					System.out.println(e.getMessage());
+				}
 				break;
 			case 0:
 				System.out.println("Leaving the bank application...");
@@ -51,7 +63,7 @@ public static void main(String args[])throws AccountException,CustomerException,
 	
 }
 
-public static void adminPage()
+public static void adminPage() throws AccountException
 {
 	Scanner s1=new Scanner(System.in);
 	while(true)
@@ -82,8 +94,14 @@ public static void adminPage()
 			case 2:
 				System.out.println("Enter customer Account Number to delete");
 				int de=s1.nextInt();
+				try {
 				accountService.deleteAccount(de);
 				System.out.println("customer Account of account number :"+de+" is deleted");
+				}
+				catch(NullPointerException e)
+				{
+					System.out.println("The account with account number:"+de+"did not exist");
+				}
 				break;
 			case 3:
 				System.out.println("Enter the customer Account number to update");

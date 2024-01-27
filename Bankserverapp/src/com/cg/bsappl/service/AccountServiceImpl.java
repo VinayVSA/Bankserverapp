@@ -99,7 +99,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public void deleteAccount(int id) {
+	public void deleteAccount(int id) throws AccountException {
 		accountdao.deleteAccount(id);
 		
 	}

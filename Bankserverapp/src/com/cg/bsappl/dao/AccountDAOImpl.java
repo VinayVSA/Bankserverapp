@@ -1,6 +1,7 @@
 package com.cg.bsappl.dao;
 
 import com.cg.bsappl.beans.Account;
+import com.cg.bsappl.exception.AccountException;
 import com.cg.bsappl.util.ArrayUtil;
 
 public class AccountDAOImpl implements AccountDAO {
@@ -30,8 +31,8 @@ public class AccountDAOImpl implements AccountDAO {
 	}
 
 	@Override
-	public void deleteAccount(int id) {
-		// TODO Auto-generated method stub
+	public void deleteAccount(int id) throws AccountException {
+		
 		ArrayUtil.deleteAccountById(id);
 		
 	}

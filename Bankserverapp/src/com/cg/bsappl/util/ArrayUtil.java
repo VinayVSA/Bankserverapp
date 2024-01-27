@@ -7,6 +7,7 @@ import java.util.Date;
 import com.cg.bsappl.beans.Account;
 import com.cg.bsappl.beans.Customer;
 import com.cg.bsappl.beans.Transaction;
+import com.cg.bsappl.exception.AccountException;
 
 public class ArrayUtil {
 	
@@ -53,16 +54,21 @@ public class ArrayUtil {
 	}
 	
 	}
-	public static void deleteAccountById(int id)
+	public static void deleteAccountById(int id)throws AccountException
 	{
+   
 	for(int i=0;i<acc.length;i++)
 	{
-	 if(acc[i].getAccountNum()==id)
+	 if(acc[i].getAccountNum()==id && acc[i]!=null)
 	 {
 		 acc[i]=null;
+		
+		 break;
 	 }
+	 
 		
 	}
+	
 	}
 	public static void updateAccount(Account updateAccount)
 	{
