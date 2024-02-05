@@ -54,19 +54,23 @@ public class ArrayUtil {
 	}
 	
 	}
-	public static void deleteAccountById(int id)throws AccountException
+	public static void deleteAccountById(int id)throws AccountException, NullPointerException
 	{
-   
+    boolean da=false;
 	for(int i=0;i<acc.length;i++)
 	{
 	 if(acc[i].getAccountNum()==id && acc[i]!=null)
 	 {
 		 acc[i]=null;
-		
+		da=true;
 		 break;
 	 }
 	 
 		
+	}
+	if(!da)
+	{
+		throw new NullPointerException("The account of account number "+id+"did not exist");
 	}
 	
 	}

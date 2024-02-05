@@ -31,26 +31,22 @@ public static void main(String args[])
 		System.out.println("1.Login as Admin");
 		System.out.println("2.Login as Customer");
 		System.out.println("0.Exit bank application");
+		try {
 		int log=s.nextInt();
+		
 		switch(log)
 		{
 			case 1:
-				try {
+				
 				adminPage();
-				}
-				catch(AccountException e)
-				{
-					//System.out.println(e.getMessage());
-				}
+				
+				
 				break;
 			case 2:
-				try {
+				
 				customerPage();
-				}
-				catch(AccountException e)
-				{
-					System.out.println(e.getMessage());
-				}
+				
+				
 				break;
 			case 0:
 				System.out.println("Leaving the bank application...");
@@ -59,12 +55,20 @@ public static void main(String args[])
 			default:
 				System.out.println("Enter valid choice");
 		}
+		}
+		catch(InputMismatchException e)
+		{
+			System.out.println("Enter only valid integers");
+			s.nextLine();
+		}
 	}
+		
 	
 }
 
-public static void adminPage() throws AccountException
+public static void adminPage() 
 {
+	
 	Scanner s1=new Scanner(System.in);
 	while(true)
 	{
@@ -77,6 +81,7 @@ public static void adminPage() throws AccountException
 		switch(Choice)
 		{
 			case 1:
+				
 				System.out.println("Enter First Name: ");
 				String fn=s1.next();
 				System.out.println("Enter Last Name");
@@ -100,12 +105,19 @@ public static void adminPage() throws AccountException
 				}
 				catch(NullPointerException e)
 				{
-					System.out.println("The account with account number:"+de+"did not exist");
+					System.out.println("The account with account number: "+de+" did not exist");
+				}
+				catch(AccountException e)
+				{
+					System.out.println("Deletion of Account is unsuccessful");
 				}
 				break;
 			case 3:
+				
 				System.out.println("Enter the customer Account number to update");
 				int up=s1.nextInt();
+				try {
+				
 				System.out.println("Current Customer details of the account no: "+up+"are=");
 				System.out.println(accountService.getAccountById(up));
 				System.out.println("Enter First Name");
@@ -118,7 +130,11 @@ public static void adminPage() throws AccountException
 				customerService.updateCustomer(c1);
 				
 				accountService.updateAccount(new Account(up,accountService.getAccountById(up).getBalance(),new Customer(accountService.getAccountById(up).getCustomer().getCustomerId(),upfn,upln,upeid)));
-				
+				}
+				catch(NullPointerException e)
+				{
+					System.out.println("The account with account number: "+up+" did not exist");
+				}
 				break;
 			
 			case 0:
@@ -127,9 +143,11 @@ public static void adminPage() throws AccountException
 				System.out.println("Enter valid choice");
 		}
 	}
+	
 }
-public static void customerPage()throws AccountException
+public static void customerPage()
 {
+	
 	Scanner s2=new Scanner(System.in);
 	while(true) {
 		System.out.println("================================================================");
@@ -165,22 +183,35 @@ public static void customerPage()throws AccountException
 			String type=s2.next();
 			if(type.equals("deposit"))
 			{
+				try {
 				System.out.println("Enter your account number");
 				int accNum2=s2.nextInt();
 				System.out.println("Enter the deposit amount");
 				double amount=s2.nextDouble();
 				accountService.deposit(accNum2, amount);
+				}
+				catch(AccountException e)
+				{
+					System.out.println("Deposit is unsuccessful");
+				}
 			}
 			if(type.equals("withdraw"))
 			{
+				try {
 				System.out.println("Enter your account number");
 				int accNum3=s2.nextInt();
 				System.out.println("Enter the withdraw amount");
 				double amount=s2.nextDouble();
 				accountService.withdraw(accNum3, amount);
+				}
+				catch(AccountException e)
+				{
+					System.out.println("withdraw is unsuccessful");
+				}
 			}
 			break;
 		case 3:
+			try {
 			System.out.println("Enter the money to transfer:");
 			double amount=s2.nextDouble();
 			System.out.println("Enter the from account number:");
@@ -188,6 +219,11 @@ public static void customerPage()throws AccountException
 			System.out.println("Enter the to account number:");
 			int accNum5=s2.nextInt();
 			accountService.transfer(accNum4, accNum5, amount);
+			}
+			catch(AccountException e)
+			{
+				System.out.println("Transfer is unsuccessful");
+			}
 			break;
 		case 4:
 			 System.out.println("Enter your Customer Account Number");
@@ -227,5 +263,7 @@ public static void customerPage()throws AccountException
 			break;
 		}
 	}
+	
 }
+
 }
